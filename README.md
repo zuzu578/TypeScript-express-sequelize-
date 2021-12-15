@@ -263,4 +263,20 @@ select * from testModels t1 left join testModel2 t2 on t1.TEST_ID = t2.TEST_ID
 
 
 
+![left join](https://user-images.githubusercontent.com/69393030/146158594-04f60591-5b24-4a7c-9477-e51bcff9712e.PNG)
 
+
+left 조인은 join 할 테이블 entity ( model ) 을 include : [] 통해서 사용할수있다.
+
+``` typescript
+include:[
+          {model:testModels2, /* as:"TB_TEST_20211214_CONTENT",  */attributes:["TEST_TITLE" , "TEST_CONTENT"]},
+        ]
+```
+위 코드를 보면 
+
+model : 조인할 테이블 ( 설정한 모델 엔티티 )
+
+as : 사용할 테이블 별칭 
+
+attributes : 조인해서 가져올 컬럼 들을 위와 같이 작성하면된다. 
