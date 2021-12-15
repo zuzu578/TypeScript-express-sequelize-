@@ -170,6 +170,44 @@ http method 는 post 이다.
 
 http method 는 post / put 을 사용한다.
 
+
+# join 을 위한 관계설정 (Associations)
+
+# 1) hasOne(일대일 관계)
+
+``` typescript
+  Board.hasOne(Board, {
+    sourceKey: "orderBoardIdx",
+    foreignKey: "idx",
+    as: "answerBoard",
+    hooks: true,
+  });
+
+```
+# 2) hasMany(일대다 관계) 
+
+```typescript 
+
+  User.hasMany(Board, {
+    foreignKey: "userIdx",
+    sourceKey: "idx",
+    as: "user",
+    hooks: true,
+    onDelete: "CASCADE",
+  });
+
+
+```
+
+# 3) belongsTo(다대다 관계)
+```typescript
+
+ testModels.belongsTo(testModel2, {
+    foreignKey: "TEST_ID",
+   // as: "TB_TEST_20211214_CONTENT",
+  });
+
+```
 # left join (left outer join)
 ``` typescript
 
