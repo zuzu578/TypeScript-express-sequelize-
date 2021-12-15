@@ -280,3 +280,31 @@ model : 조인할 테이블 ( 설정한 모델 엔티티 )
 as : 사용할 테이블 별칭 
 
 attributes : 조인해서 가져올 컬럼 들을 위와 같이 작성하면된다. 
+
+
+# inner join ( 내부 조인 )
+
+시퀄라이저 에서 inner join 을 사용하는 방법은 다음과 같다.
+
+``` typescript
+.findAll({
+        //raw: true,
+        include: [
+          {
+            model: testModels2,
+            required: true, // inner join 여부 (true : inner join , false : left join)
+            /* as:"TB_TEST_20211214_CONTENT",  */ attributes: [
+              "TEST_TITLE",
+              "TEST_CONTENT",
+            ],
+          },
+        ],
+      })
+
+```
+
+
+required 를 false 로 할 경우 , left join 
+
+required 를 true 로 할 경우 , inner join 
+
