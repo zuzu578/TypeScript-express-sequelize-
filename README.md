@@ -1,5 +1,95 @@
 # 타입스크립트 + 익스프레스 + 시퀄라이즈
 
+# 시퀄라이즈 모델 정의
+``` typescript
+interface testType extends Model {
+  TEST_ID : number;
+  TEST_NAME : string;
+  TEST_ADDREESS : string;
+}
+
+
+```
+``` typescript
+import { Model, BuildOptions, DataTypes } from "sequelize";
+import { sequelize, Sequelize } from ".";
+import { testType } from "../types/models";
+
+export type testModels = typeof Model & {
+  new (values?: object, options?: BuildOptions): testType;
+};
+
+export default () => {
+  return <testModels>sequelize.define(
+    "TB_TEST_20211214",
+    {
+      TEST_ID: {
+        type: DataTypes.INTEGER(),
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      TEST_NAME: {
+        type: DataTypes.STRING(),
+      },
+
+      TEST_ADDREESS: {
+        type: DataTypes.STRING(),
+      },
+
+      createdAt: {
+        type: DataTypes.DATE(3),
+        allowNull: true,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP(3)"),
+      },
+      updatedAt: {
+        type: DataTypes.DATE(3),
+        allowNull: true,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP(3)"),
+      },
+    },
+
+    {
+      indexes: [
+        {
+          unique: true,
+          fields: ["TEST_ID"],
+        },
+      ],
+      tableName: "TB_TEST_20211214",
+      charset: "utf8",
+      collate: "utf8_general_ci",
+    }
+  );
+};
+
+
+```
+
+# 시퀄라이즈 테이블 생성 
+``` typescript
+export const addTable = async () => {
+  modelAssociationHandler.associateModels();
+  // testModel table create 
+  const testModel = test();
+
+  // table 확인, 없으면 create
+  File.sync()
+    .then(async () => {
+      console.log("✅Success Create test Table");
+      return testModel.sync();
+    })
+    .then(() => {
+      console.log("checked");
+    })
+    .catch((err) => {
+      console.log("❗️Error in Table init : ", err);
+    });
+};
+
+
+```
+
 
 # find (조회)
 ![find](https://user-images.githubusercontent.com/69393030/146136216-a4b5c391-20bf-4732-95a4-dfbbb59fa66a.PNG)
