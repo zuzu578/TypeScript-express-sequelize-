@@ -170,3 +170,97 @@ http method 는 post 이다.
 
 http method 는 post / put 을 사용한다.
 
+# left join (left outer join)
+``` typescript
+
+export type testModels = typeof Model & {
+  new (values?: object, options?: BuildOptions): testType;
+};
+
+export default () => {
+  const testModel2 = testModels2();
+  const testModels = <testModels>sequelize.define(
+    "TB_TEST_20211214",
+    {
+      TEST_ID: {
+        type: DataTypes.INTEGER(),
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      TEST_NAME: {
+        type: DataTypes.STRING(),
+      },
+
+      TEST_ADDREESS: {
+        type: DataTypes.STRING(),
+      },
+
+      createdAt: {
+        type: DataTypes.DATE(3),
+        allowNull: true,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP(3)"),
+      },
+      updatedAt: {
+        type: DataTypes.DATE(3),
+        allowNull: true,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP(3)"),
+      },
+    },
+
+    {
+      indexes: [
+        {
+          unique: true,
+          fields: ["TEST_ID"],
+        },
+      ],
+      tableName: "TB_TEST_20211214",
+      charset: "utf8",
+      collate: "utf8_general_ci",
+    }
+  );
+
+/**
+ * join 을 위한 method 
+ */
+  testModels.belongsTo(testModel2, {
+    foreignKey: "TEST_ID",
+   // as: "TB_TEST_20211214_CONTENT",
+  });
+
+/*
+  testModels.hasMany(testModel2, {
+    foreignKey: "TEST_ID",
+    as: "testId",
+  });
+*/
+
+
+  return testModels;
+
+};
+
+
+```
+
+시퀄라이저에서 left join 을 사용할시 , 기준이 되는 테이블 엔티티 (model) 에 join method 를 선언해주면된다.
+
+``` typescript
+ testModels.belongsTo(testModel2, {
+    foreignKey: "TEST_ID",
+   // as: "TB_TEST_20211214_CONTENT",
+  });
+
+```
+저 코드에서 , testModels.belongsto (testModel2 )  이렇게 되어있는데 이것은 
+
+testModels 를 기준으로 testModel2 를 left 조인 하겠다는 것이다. 
+
+sql 로  치면,
+
+select * from testModels t1 left join testModel2 t2 on t1.TEST_ID = t2.TEST_ID 
+
+
+
+
