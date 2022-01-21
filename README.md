@@ -1,5 +1,13 @@
 # 타입스크립트 + 익스프레스 + 시퀄라이즈
 
+# 시퀄라이즈 nest true 
+
+nest 옵션은 Association 을 통해 만들어진 result 를 보기 좋게 사용하기 용이하게 객체형태로 만들어주는 옵션이다
+
+# 사용법 
+
+nest:true 라고 적어서 사용가능 
+
 # 시퀄라이즈 모델 정의
 ``` typescript
 interface testType extends Model {
